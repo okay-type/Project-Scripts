@@ -1,5 +1,5 @@
 libFolder: source/lib
-extensionFile: Project-Scripts.roboFontExt
+extensionFile: Project_Scripts.roboFontExt
 license: |
   MIT License
 
