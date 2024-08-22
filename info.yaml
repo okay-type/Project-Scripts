@@ -8,6 +8,7 @@ version: 1.0.0
 addToMenu:
 - path: project-ufo-scripts.py
   preferredName: test
+  shortKey: []
 html: false
 requiresVersionMajor: '4'
 requiresVersionMinor: '0'
