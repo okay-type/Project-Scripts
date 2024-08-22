@@ -6,6 +6,7 @@ launchAtStartUp: true
 mainScript: project-ufo-scripts.py
 version: 1.0.0
 addToMenu:
+
 html: false
 requiresVersionMajor: '4'
 requiresVersionMinor: '0'
