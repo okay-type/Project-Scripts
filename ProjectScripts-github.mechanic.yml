@@ -1,9 +1,9 @@
-extensionName: Project Scripts
 description: Adds a menu item with scripts from the current .ufo’s folder
-developer: Okay Type
-developerURL: https://github.com/okay-type
-repository: http://github.com/okay-type/Project-Scripts
+developer: Jackson Showalter-Cavanaugh
+developerURL: http://okaytype.com
+extensionName: Project Scripts
 extensionPath: Project-Scripts.roboFontExt
+repository: http://github.com/okay-type/Project-Scripts
 icon: https://raw.githubusercontent.com/okay-type/Project-Scripts/master/ProjectScriptsMechanicIcon.png
 infoPath: https://raw.githubusercontent.com/okay-type/Project-Scripts/HEAD/info.yaml
 zipPath: https://github.com/okay-type/Project-Scripts/releases/latest/download/Project_Scripts.roboFontExt.zip
