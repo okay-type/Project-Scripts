@@ -9,3 +9,5 @@ addToMenu: []
 html: false
 requiresVersionMajor: '4'
 requiresVersionMinor: '0'
+
+
