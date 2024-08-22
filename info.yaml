@@ -1,4 +1,5 @@
 name: Project Scripts
+extensionPath: ProjectScripts.roboFontExt
 developer: Jackson Showalter-Cavanaugh
 developerURL: http://okaytype.com
 launchAtStartUp: true
