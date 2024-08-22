@@ -1,4 +1,5 @@
 libFolder: source/lib
+extensionFile: ProjectScripts.roboFontExt
 license: |
   MIT License
 
