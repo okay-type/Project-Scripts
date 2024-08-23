@@ -20,7 +20,6 @@ Requires for [RoboFont 4.0].
 
 Questions and tasks that need to be done:
 - Is there better a menu title than 'Project Scripts'?
-- Does this need a preference to change the folder name or path relative to the ufo?
 - Are there any optimizations to make?
 - Are there any events missing?
 - Would this be better as a submenu in the regular Scripts folder?
