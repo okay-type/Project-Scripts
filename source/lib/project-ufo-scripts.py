@@ -3,6 +3,7 @@ from mojo.subscriber import registerCurrentFontSubscriber
 from mojo.UI import MenuBuilder
 from os import path
 # from os import walk
+
 import AppKit
 
 
@@ -44,20 +45,23 @@ class project_ufo_scripts(Subscriber):
             self.add_menu()
         ufo = info['font']
         ufo_path = ufo.path
-        self.clear_project_menu()
+        # self.p('clear_project_menu ufo_path', ufo_path)
         if ufo_path == None:
+            self.clear_project_menu()
             self.current_ufo_folder = None
             return
         folder_path, file_name = path.split(ufo_path)
+        # self.p('clear_project_menu folder_path', ufo_path)
         if folder_path == self.current_ufo_folder:
             return
+        self.clear_project_menu()
         self.current_ufo_folder = folder_path
         script_folder = self.current_ufo_folder + '/' + script_folder_name
         if path.isdir(folder_path + '/' + script_folder_name):
             self.project_menu.addMenuFromPath(script_folder)
             # debug
             # for (dirpath, dirnames, filenames) in walk(script_folder):
-            #     print(dirpath, dirnames, filenames)
+            #     self.p(dirpath, dirnames, filenames)
 
     def fontDocumentDidClose(self, info):
         if len(AllFonts()) == 0 or CurrentFont() == None:
@@ -68,7 +72,12 @@ class project_ufo_scripts(Subscriber):
         blank = AppKit.NSArray.alloc().initWithArray_(newItemArray)
         self.project_menu_item.submenu().setItemArray_(blank)
 
-
+    # def p(self, *args):
+    #     if self.debug == True:
+    #         s = 'debug project ufo scripts '
+    #         for x in args:
+    #             s += str(x) + ' '
+    #         print(s)
 
 registerCurrentFontSubscriber(project_ufo_scripts)
 

@@ -1,10 +1,9 @@
 name: Project Scripts
-extensionPath: Project_Scripts.roboFontExt
 developer: Jackson Showalter-Cavanaugh
 developerURL: http://okaytype.com
 launchAtStartUp: true
 mainScript: project-ufo-scripts.py
-version: 1.0.0
+version: 1.0.1
 addToMenu: []
 html: false
 requiresVersionMajor: '4'
