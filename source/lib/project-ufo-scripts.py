@@ -11,7 +11,6 @@ from pathlib import Path
 from mojo.extensions import setExtensionDefault
 from mojo.extensions import getExtensionDefault
 from mojo.extensions import registerExtensionDefaults
-from mojo.extensions import removeExtensionDefault
 import AppKit
 
 
@@ -28,8 +27,13 @@ class project_ufo_scripts(Subscriber):
     def build(self):
         self.current_ufo_root = ''
         self.project_menu_item = None
-        self.relative_folder_root = getExtensionDefault(prefKey+'.relative_folder_root')
-        self.relative_folder_scripts = getExtensionDefault(prefKey+'.relative_folder_scripts')
+        initialDefaults = {
+            prefKey+'.relative_folder_root': '/',
+            prefKey+'.relative_folder_scripts': '/scripts',
+        }
+        registerExtensionDefaults(initialDefaults)
+        self.relative_folder_root = getExtensionDefault(prefKey+'.relative_folder_root', '/')
+        self.relative_folder_scripts = getExtensionDefault(prefKey+'.relative_folder_scripts', '/scripts')
 
     def started(self):
         self.menubar = AppKit.NSApp().mainMenu()
@@ -122,14 +126,6 @@ registerCurrentFontSubscriber(project_ufo_scripts)
 class PreferencesController(ezui.WindowController):
 
     def build(self):
-        initialDefaults = {
-            prefKey+'.relative_folder_root': '/',
-            prefKey+'.relative_folder_scripts': '/scripts',
-        }
-        # for v, p in initialDefaults.items():
-            # removeExtensionDefault(v)
-        registerExtensionDefaults(initialDefaults)
-
         content = '''
         !!!!! Set Paths
         Set the relative path from a *.ufo to the project’s root folder.
@@ -152,8 +148,8 @@ class PreferencesController(ezui.WindowController):
 
     def started(self):
         # self.w.getItem('menu_location').enable(False)
-        relative_folder_root = getExtensionDefault(prefKey+'.relative_folder_root')
-        relative_folder_scripts = getExtensionDefault(prefKey+'.relative_folder_scripts')
+        relative_folder_root = getExtensionDefault(prefKey+'.relative_folder_root', '/')
+        relative_folder_scripts = getExtensionDefault(prefKey+'.relative_folder_scripts', '/scripts')
         self.w.getItem('folder_root').set(relative_folder_root)
         self.w.getItem('folder_scripts').set(relative_folder_scripts)
         self.w.open()
