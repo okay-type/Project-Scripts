@@ -27,6 +27,9 @@ Questions and tasks that need to be done:
 
 - - -
 
+Version 1.0.3
+- fixed a bug where the menu wouldn't rebuild after closing one ufo then opening another from the same project folder
+
 Version 1.0.2
 - added preference ui
 - added preferences to set relative paths for project root and script folders
