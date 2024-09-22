@@ -25,7 +25,6 @@ class project_ufo_scripts(Subscriber):
     debug = True
 
     def build(self):
-        # print'starting project_ufo_scripts')
         self.current_ufo_root = ''
         self.project_menu_item = None
         initialDefaults = {
@@ -53,50 +52,38 @@ class project_ufo_scripts(Subscriber):
         self.project_menu_item = self.menubar.itemWithTitle_(script_menu_name)
 
     def destroy(self):
-        # print'destroying project_ufo_scripts')
         try:
             self.menubar.removeItem_(self.project_menu_item)
         except:
             return
 
     def fontDocumentDidBecomeCurrent(self, info):
-        # print('fontDocumentDidBecomeCurrent')
         if self.project_menu_item == None:
             self.add_menu()
         ufo = info['font']
         ufo_path = ufo.path
-
-        # print'clear_project_menu ufo_path', ufo_path)
         if ufo_path == None:
-            # print('new blank ufo, clearing project script menu')
             self.clear_project_menu()
             self.add_preferences_menuitem()
             self.current_ufo_root = None
             return
-
         ufo_folder_path, ufo_file_name = path.split(ufo_path)
-        # print'clear_project_menu folder_path', ufo_folder_path)
-
         relative_folder_root = ufo_folder_path + '/' + self.relative_folder_root
         relative_folder_scripts = ufo_folder_path + '/' + self.relative_folder_scripts
         absolute_folder_root = str(Path(relative_folder_root).resolve())
         absolute_folder_scripts = str(Path(relative_folder_scripts).resolve())
-        # print'absolute_folder_root   ', absolute_folder_root)
-        # print'absolute_folder_scripts', absolute_folder_scripts)
-
         if absolute_folder_root != self.current_ufo_root:
-            # print('changed ufo, rebuilding project script menu')
             self.current_ufo_root = absolute_folder_root
-            self.clear_project_menu()
-            if path.isdir(absolute_folder_scripts):
-                self.project_menu.addMenuFromPath(absolute_folder_scripts)
-                # for (dirpath, dirnames, filenames) in walk(absolute_folder_scripts):
-                #     printdirpath, dirnames, filenames)
-            self.add_preferences_menuitem()
+            self.build_menu(absolute_folder_root, absolute_folder_scripts)
+
+    def build_menu(self, absolute_folder_root, absolute_folder_scripts):
+        self.clear_project_menu()
+        if path.isdir(absolute_folder_scripts):
+            self.project_menu.addMenuFromPath(absolute_folder_scripts)
+        self.add_preferences_menuitem()
 
     def fontDocumentDidClose(self, info):
         if len(AllFonts()) == 0 or CurrentFont() == None:
-            # print('ufo closed, clearing project script menu')
             self.clear_project_menu()
             self.current_ufo_root = None
 
@@ -109,14 +96,30 @@ class project_ufo_scripts(Subscriber):
         menu = self.project_menu_item.submenu()
         i = len(menu.itemArray())
         menu.insertItem_atIndex_(AppKit.NSMenuItem.separatorItem(), i)
-        self.target = CallbackWrapper(self.open_preferences)
+
+        self.target_open_preferences = CallbackWrapper(self.open_preferences)
         newItem = AppKit.NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Project Scripts Preferences', 'action:', '')
-        newItem.setTarget_(self.target)
+        newItem.setTarget_(self.target_open_preferences)
         menu.insertItem_atIndex_(newItem, i+1)
+
+        self.target_update_menu = CallbackWrapper(self.update_menu)
+        newItem = AppKit.NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Update Menu', 'action:', '')
+        newItem.setTarget_(self.target_update_menu)
+        menu.insertItem_atIndex_(newItem, i+2)
 
     def open_preferences(self, sender):
         PreferencesController()
 
+    def update_menu(self, sender):
+        if CurrentFont():
+            ufo_folder_path, ufo_file_name = path.split(CurrentFont().path)
+            relative_folder_root = ufo_folder_path + '/' + self.relative_folder_root
+            relative_folder_scripts = ufo_folder_path + '/' + self.relative_folder_scripts
+            absolute_folder_root = str(Path(relative_folder_root).resolve())
+            absolute_folder_scripts = str(Path(relative_folder_scripts).resolve())
+            if absolute_folder_root != self.current_ufo_root:
+                self.current_ufo_root = absolute_folder_root
+            self.build_menu(absolute_folder_root, absolute_folder_scripts)
 
 
 

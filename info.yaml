@@ -3,7 +3,7 @@ developer: Jackson Showalter-Cavanaugh
 developerURL: http://okaytype.com
 launchAtStartUp: true
 mainScript: project-ufo-scripts.py
-version: 1.0.4
+version: 1.0.5
 addToMenu: []
 html: false
 requiresVersionMajor: '4'

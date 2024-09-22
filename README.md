@@ -27,7 +27,10 @@ Questions and tasks that need to be done:
 
 - - -
 
-Version 1.0.3
+Version 1.0.5
+- added "Update Menu" item to refresh the Project Scripts menu
+
+Version 1.0.4
 - fixed a bug where the menu wouldn't rebuild after closing one ufo then opening another from the same project folder
 
 Version 1.0.2
